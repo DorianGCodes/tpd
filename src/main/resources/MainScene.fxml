@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.MainSceneController">
+   <children>
+      <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #3b5998;">
+         <children>
+            <Label layoutX="-1.0" layoutY="39.0" prefHeight="64.0" prefWidth="600.0" style="-fx-alignment: center;" styleClass="fx" text="Select Graph Properties" textFill="#dfe4ea" AnchorPane.topAnchor="39.0">
+               <font>
+                  <Font name="Signika Regular" size="37.0" />
+               </font>
+            </Label>
+            <VBox layoutX="28.0" layoutY="112.0" prefHeight="150.0" prefWidth="243.0">
+               <children>
+                  <RadioButton fx:id="directedButton" mnemonicParsing="false" prefHeight="104.0" prefWidth="243.0" text="Directed" />
+                  <RadioButton fx:id="undirectedButton" mnemonicParsing="false" prefHeight="105.0" prefWidth="262.0" text="Undirected" />
+               </children>
+            </VBox>
+            <VBox layoutX="339.0" layoutY="112.0" prefHeight="150.0" prefWidth="243.0">
+               <children>
+                  <RadioButton fx:id="unweightedButton" mnemonicParsing="false" prefHeight="109.0" prefWidth="243.0" text="Unwieghted" />
+                  <RadioButton fx:id="weightedButton" mnemonicParsing="false" prefHeight="105.0" prefWidth="262.0" text="Wighted" />
+               </children></VBox>
+            <Button fx:id="nextSceneButton" layoutX="474.0" layoutY="347.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="108.0" contentDisplay="GRAPHIC_ONLY" style="-fx-background-color: #487eb0;">
+               <graphic>
+                  <ImageView fitHeight="33.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="right-arrow.png"/>
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children></AnchorPane>
+   </children>
+</AnchorPane>
