@@ -8,19 +8,21 @@ public class Edge {
     public double weight;
     public Shape line;
     public Label weightLabel;
+    public String decision;
 
 
-    public Edge(Node source, Node target,double weight,Shape line, Label weightLabel) {
+    public Edge(Node source, Node target,double weight,Shape line, Label weightLabel,String decision) {
         this.source = source;
         this.target = target;
         this.weight = weight;
         this.line = line;
         this.weightLabel = weightLabel;
+        this.decision = decision;
     }
 
     public Edge edgeWithSwappedNodes() {
         var temp = this.target;
-        return new Edge(this.target,this.source,this.weight,this.line,this.weightLabel);
+        return new Edge(this.target,this.source,this.weight,this.line,this.weightLabel,"");
     }
 
 }

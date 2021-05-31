@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.util.Pair;
+import main.models.Arrow;
 import main.models.Edge;
 import main.models.Node;
 import main.models.NodeFx;
@@ -21,6 +22,7 @@ import java.util.List;
 
 public class EventHandlerProvider {
     public static SimpleObjectProperty<NodeFx> selectedNode = provideObservableNode();
+    public static char iterator = 'A';
 
     public static SimpleObjectProperty<NodeFx> provideObservableNode() {
         var result = new SimpleObjectProperty<NodeFx>();
@@ -36,7 +38,7 @@ public class EventHandlerProvider {
         return result;
     }
 
-    public static EventHandler<MouseEvent> provideNodeMouseEventHandler(
+    public static EventHandler<MouseEvent> provideAddNodeMouseEventHandler(
             List<NodeFx> nodeList,
             Group group
     ){
@@ -55,10 +57,12 @@ public class EventHandlerProvider {
                                     currentSelectedNode.getNode(),
                                     Integer.parseInt(weightAndLine.getKey().getText()),
                                     weightAndLine.getValue(),
-                                    weightAndLine.getKey()
+                                    weightAndLine.getKey(),
+                                    String.valueOf(iterator)
                             );
                             selectedNode.get().getNode().adjacents.add(edge);
-                            currentSelectedNode.getNode().adjacents.add(edge.edgeWithSwappedNodes());
+                            iterator++;
+//                            currentSelectedNode.getNode().adjacents.add(edge.edgeWithSwappedNodes());
                         }
                         resetSelectedNodes(selectedNode.get());
                         return;
@@ -77,8 +81,9 @@ public class EventHandlerProvider {
             }
             private Pair<Label,Line> drawEdgeLine(NodeFx selectedNode, NodeFx currentSelectedNode) {
                 var edgeLine = new Line(selectedNode.getPoint().x,selectedNode.getPoint().y,currentSelectedNode.getPoint().x,currentSelectedNode.getPoint().y);
+                var arrow = new Arrow(selectedNode.getPoint().x,selectedNode.getPoint().y,currentSelectedNode.getPoint().x,currentSelectedNode.getPoint().y);
                 edgeLine.setId("line");
-                group.getChildren().add(edgeLine);
+                group.getChildren().add(arrow);
                 var label = getWeightLabel(edgeLine);
                 group.getChildren().add(label);
                 return new Pair(label,edgeLine);

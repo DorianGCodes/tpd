@@ -6,6 +6,7 @@ import javafx.animation.SequentialTransition;
 import javafx.animation.StrokeTransition;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import javafx.util.Pair;
 import main.models.Edge;
 import main.models.Node;
 import main.models.NodeFx;
@@ -54,12 +55,23 @@ public class DijkstraAlgorithm {
         st.getChildren().add(ft1);
     }
 
-    public static List<Node>    getShortestPath(Node target) {
+    public static Pair<List<Node>,List<String>> getShortestPath(Node target) {
         List<Node> path = new ArrayList<>();
+        List<String> dec = new ArrayList<>();
         for(Node i = target;i != null;i = i.previous ) {
             path.add(i);
+            Node finalI = i;
+            if(i.previous != null) {
+                var edge = i.previous.adjacents.stream()
+                        .filter(e -> e.target.id.equals(finalI.id))
+                        .findAny()
+                        .orElse(null);
+                if (edge != null)
+                    dec.add(edge.decision);
+            }
         }
         Collections.reverse(path);
-        return path;
+        Collections.reverse(dec);
+        return new Pair(path,dec);
     }
 }

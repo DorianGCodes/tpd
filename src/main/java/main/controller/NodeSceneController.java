@@ -1,8 +1,5 @@
 package main.controller;
 
-import javafx.animation.Interpolator;
-import javafx.animation.ScaleTransition;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
@@ -12,9 +9,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.util.Duration;
-import main.models.Node;
+import javafx.util.Pair;
+import main.models.Decision;
 import main.models.NodeFx;
 import main.services.AnimationService;
 import main.services.DijkstraAlgorithm;
@@ -23,6 +19,7 @@ import main.services.NodeFactory;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -48,20 +45,20 @@ public class NodeSceneController implements Initializable {
     }
 
     public void addNode(MouseEvent event) {
-        if(event.getButton() != MouseButton.PRIMARY)
+        if (event.getButton() != MouseButton.PRIMARY)
             return;
         if (nodeButton.isSelected()) {
-            if(event.getSource().equals(nodePane)) {
-                NodeFx node = new NodeFx(event,String.valueOf(nodeList.size()));
-                NodeFactory.addNodeFx(this,node);
+            if (event.getSource().equals(nodePane)) {
+                NodeFx node = new NodeFx(event, String.valueOf(nodeList.size()));
+                NodeFactory.addNodeFx(this, node);
                 AnimationService.provideAddingNodeAnimation(node);
-                node.setOnMouseReleased(EventHandlerProvider.provideNodeMouseEventHandler(nodeList, group));
+                node.setOnMouseReleased(EventHandlerProvider.provideAddNodeMouseEventHandler(nodeList, group));
             }
         }
     }
 
     public void clearSelectedNode(MouseEvent event) {
-        if(event.getButton() == MouseButton.SECONDARY) {
+        if (event.getButton() == MouseButton.SECONDARY) {
 //            AnimationService.provideNodeColorFillingTransition(EventHandlerProvider.selectedNode.get(), Color.RED,Color.BLACK);
             EventHandlerProvider.selectedNode.set(null);
         }
@@ -72,7 +69,7 @@ public class NodeSceneController implements Initializable {
         for (NodeFx n : nodeList) {
             n.getDistance().setLayoutX(n.getPoint().x + 20);
             n.getDistance().setLayoutY(n.getPoint().y);
-            if(n == EventHandlerProvider.selectedNode.get()) {
+            if (n == EventHandlerProvider.selectedNode.get()) {
                 n.getDistance().setText(("Dist. : " + 0));
             }
             group.getChildren().add(n.getDistance());
@@ -89,13 +86,12 @@ public class NodeSceneController implements Initializable {
             var listOfVisitedNodes1 = DijkstraAlgorithm.getShortestPath(e.getNode());
             System.out.print("Target Node Id: " + e.getNode().id + " Path: ");
             strBuilder.append("Target Node Id: " + e.getNode().id + " Path: ");
-            listOfVisitedNodes1.forEach(w -> System.out.print(strBuilder.append(w.id + " ")));
+            listOfVisitedNodes1.getKey().forEach(w -> System.out.print(strBuilder.append(w.id + " ")));
+            strBuilder.append("\n");
+            listOfVisitedNodes1.getValue().forEach(w -> System.out.print(strBuilder.append(w + " ")));
             System.out.println("");
             strBuilder.append("\n");
         });
         textArea.setText(strBuilder.toString());
     }
-
-
-
 }
